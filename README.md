@@ -1,18 +1,10 @@
-## Movie Rating Prediction
+# README: Iris Flower Classification
 
-## creator # Halvepravin
+## Creator # Halvepravin
 
 ## Aim
 
-The aim of this project is to build a model that predicts movie ratings based on given features.
-
-## Datasets
-
-The following datasets were used for this project:
-
-1. Movie_data: Contains movie information after preprocessing, including MovieName, Genre, and MovieIDs.
-2. Ratings_data: Contains ratings information after preprocessing, including Ratings and Timestamp.
-3. Users_data: Contains user information after preprocessing, including Gender, Age, Occupation, and Zip-code.
+The aim of this project is to develop a model that can classify iris flowers into different species based on their sepal and petal measurements.
 
 ## Libraries Used
 
@@ -20,31 +12,38 @@ The following important libraries were used for this project:
 
 - numpy
 - pandas
+- sklearn.cluster.KMeans
 - matplotlib.pyplot
 - seaborn
-- sklearn.preprocessing.LabelEncoder
-- sklearn.preprocessing.MinMaxScaler
-- sklearn.model_selection.train_test_split
-- sklearn.linear_model.LogisticRegression
+
+## Dataset
+
+The iris dataset was loaded using seaborn's `load_dataset` function, which contains information about iris flowers, including sepal length, sepal width, petal length, petal width, and species.
 
 ## Data Exploration and Preprocessing
 
-1. The Movie_data, Ratings_data, and Users_data were loaded as DataFrames from separate CSV files.
-2. The missing values in each DataFrame were dropped using `dropna(inplace=True)`.
-3. The shape and descriptive statistics for each DataFrame were displayed using `df.shape` and `df.describe()`.
-4. The 'Gender' column in Users_data was encoded from categorical to numerical values using LabelEncoder.
-5. The DataFrames were concatenated horizontally using `pd.concat` to create a final dataset `df_data`.
-6. Unnecessary columns like 'Occupation', 'Zip-code', and 'Timestamp' were dropped from the final dataset to create `df2`.
-7. Any remaining missing values in the final dataset `df2` were dropped using `dropna()`.
-8. Data visualization was performed using count plots and histograms to gain insights into the distribution of ratings, genders, and age.
+1. The dataset was loaded using seaborn's `load_dataset` function as a DataFrame, and its first 5 rows were displayed using `df.head()`.
+2. The 'species' column in the DataFrame was encoded to numerical values using `pd.factorize(df['species'])`.
+3. Descriptive statistics for the dataset were displayed using `df.describe()`.
+4. Missing values in the dataset were checked using `df.isna().sum()`.
 
-## Model Training
+## Data Visualization
 
-1. The feature matrix `input` and target vector `target` were created using relevant columns from the final dataset `df_final`.
-2. The data was split into training and testing sets using `train_test_split`.
-3. The input data was scaled using MinMaxScaler to normalize the values between 0 and 1.
+1. 3D scatter plots were created to visualize the relationship between species, petal length, and petal width, as well as between species, sepal length, and sepal width using `matplotlib.pyplot` and `mpl_toolkits.mplot3d.Axes3D`.
+2. 2D scatter plots were created to visualize the relationship between species and sepal length, as well as between species and sepal width using `seaborn.scatterplot`.
 
-## Model Prediction
+## Applying Elbow Technique for K-Means Clustering
 
-1. A logistic regression model was initialized and trained on the training data using `LogisticRegression`.
-2. The model was used to predict movie ratings for the test set using `model.predict(X_test)`.
+1. The Elbow Technique was applied to determine the optimal number of clusters (K) using the sum of squared errors (SSE).
+2. The KMeans algorithm was initialized with different values of K (1 to 10) and SSE was computed for each K value.
+3. A plot of K values against SSE was created using `matplotlib.pyplot` to identify the "elbow point," which indicates the optimal number of clusters.
+
+## Applying K-Means Algorithm
+
+1. The KMeans algorithm was applied to the dataset with the optimal number of clusters (K=3) obtained from the Elbow Technique.
+2. The cluster labels were predicted for each data point in the dataset using `km.fit_predict(df[['petal_length','petal_width']])`.
+
+## Accuracy Measure
+
+1. The confusion matrix was calculated to evaluate the accuracy of the KMeans clustering.
+2. The confusion matrix was plotted using `matplotlib.pyplot.imshow` and `plt.text` to visualize the true and predicted labels.
